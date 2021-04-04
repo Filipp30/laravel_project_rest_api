@@ -16,9 +16,7 @@ class LoginController extends Controller{
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string','min:8'],
         ]);
-
         $user = User::where('email',$user_inputs['email'])->first();
-
         if (! $user){
             return response([
                 'message'=>'User not exist'
@@ -31,13 +29,14 @@ class LoginController extends Controller{
         }
         $token = $user->createToken('jwt_token');
         return $token;
-
-
-
     }
 
-    public function logout(){
-        User::find(1)->tokens()->where('tokenable_id',1)->delete();
+    public function logout(Request $request){
+        $user_inputs = $request->validate([
+            'id' => ['required', 'int'],
+        ]);
+        $user_id = $user_inputs['id'];
+        User::find($user_id)->tokens()->where('tokenable_id',$user_id)->delete();
         return response([
             'message'=>'logout successfully'
         ],201);
