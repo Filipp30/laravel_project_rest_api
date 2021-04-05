@@ -31,12 +31,9 @@ class LoginController extends Controller{
         return $token;
     }
 
-    public function logout(Request $request){
-        $user_inputs = $request->validate([
-            'id' => ['required', 'int'],
-        ]);
-        $user_id = $user_inputs['id'];
-        User::find($user_id)->tokens()->where('tokenable_id',$user_id)->delete();
+    public function logout(){
+        $user = request()->user();
+        $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
         return response([
             'message'=>'logout successfully'
         ],201);
