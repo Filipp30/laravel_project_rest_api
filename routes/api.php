@@ -1,13 +1,18 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 
 
 Route::post('/registration',[RegisterController::class,'registration']);
 Route::post('/login',[LoginController::class,'login']);
+Route::post('/password/email',[ForgotPasswordController::class,'forgot']);
+Route::get('/password.reset',function (){return view('reset_password');});
+Route::post('/password/reset',[ForgotPasswordController::class,'reset']);
+
+
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/testing_request','App\Http\Controllers\TestController@testing_request');

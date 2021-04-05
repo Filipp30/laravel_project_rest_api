@@ -24,11 +24,10 @@ class LoginController extends Controller{
         }
         if (!Hash::check($user_inputs['password'],$user->password)){
             return response([
-                'message'=>'Wrong credentials'
+                'message'=>'The provided credentials are incorrect.'
             ],401);
         }
-        $token = $user->createToken('jwt_token');
-        return $token;
+        return $user->createToken('jwt_token');
     }
 
     public function logout(){
