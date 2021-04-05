@@ -66,7 +66,7 @@
 <div class="flex-center position-ref full-height">
     <form class="form-container" action="api/password/reset" method="POST">
         @csrf
-        <h2>Forgot Password?</h2>
+        <h2>Forgot Password Form</h2>
 
         <input name="email" placeholder="Enter email" value="{{request()->get('email')}}">
         <input name="password" placeholder="Enter new password">

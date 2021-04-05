@@ -13,13 +13,9 @@ Route::get('/password.reset',function (){return view('reset_password');});
 Route::post('/password/reset',[ForgotPasswordController::class,'reset']);
 
 
-
 Route::middleware(['auth:sanctum'])->group(function(){
-    Route::get('/testing_request','App\Http\Controllers\TestController@testing_request');
-
     Route::get('/user', function() { return auth()->user();});
     Route::post('/logout',[LoginController::class,'logout']);
-
 });
 
 Route::middleware(['auth:sanctum','admin'])->group(function (){

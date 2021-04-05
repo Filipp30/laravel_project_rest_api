@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller{
-
 
     public function forgot(){
         $credentials = request()->validate(['email' => 'required|email']);
@@ -22,20 +20,14 @@ class ForgotPasswordController extends Controller{
             'token' => 'required|string',
             'password' => 'required|string|confirmed'
         ]);
-
         $reset_password_status = Password::reset($credentials, function ($user, $password) {
             $user->password = Hash::make($password);
             $user->save();
         });
-
         if ($reset_password_status == Password::INVALID_TOKEN) {
             return response()->json(["message" => "Invalid token provided"], 400);
         }
-
         return response()->json(["message" => "Password has been successfully changed"]);
-
     }
-
-
 
 }

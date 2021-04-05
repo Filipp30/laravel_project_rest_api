@@ -9,7 +9,6 @@
     <body>
        <h1>Laravel Rest API </h1>
     <h2>Created by Filipp.G</h2>
-    <h3>Belgium Gent </h3>
-    <h2>GSM : 0483708133</h2>
+    <h3>filipp-tts@outlook.com</h3>
     </body>
 </html>
