@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 
 
+Route::post('/registration',[RegisterController::class,'registration']);
+Route::post('/login',[LoginController::class,'login']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/testing_request','App\Http\Controllers\TestController@testing_request');
@@ -13,6 +15,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
 });
 
-Route::post('/registration',[RegisterController::class,'registration']);
-Route::post('/login',[LoginController::class,'login']);
+Route::middleware(['auth:sanctum','admin'])->group(function (){
+
+});
 

@@ -37,6 +37,7 @@ class LoginController extends Controller{
         ]);
         $user_id = $user_inputs['id'];
         User::find($user_id)->tokens()->where('tokenable_id',$user_id)->delete();
+
         return response([
             'message'=>'logout successfully'
         ],201);
