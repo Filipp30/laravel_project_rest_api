@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class ContactEmail extends Controller{
+class ContactEmailController extends Controller{
 
     public function send_email(Request $request_data){
 

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Contact\ContactEmail;
+use App\Http\Controllers\Contact\ContactEmailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -20,7 +20,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
 
 //Contact-Page routes
-Route::post('/contact/email',[ContactEmail::class,'send_email']);
+Route::post('/contact/email',[ContactEmailController::class,'send_email']);
 
 
 
