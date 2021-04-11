@@ -17,26 +17,20 @@ class ContactEmail extends Controller{
             'user_message' => 'required|string|max:500',
         ]);
 
-        if ($validated){
-            $subject = $validated['subject'];
-            try {
-                Mail::send('./email_templates/user_contact_email',$validated,function($message) use ($subject){
-                    $message->to('filipp-tts@outlook.com','to web developer');
-                    $message->subject($subject);
-                    $message->cc('filipp-tts@outlook.com');
-                });
-                return response([
-                    'message'=>'Email send successfully'
-                ],201);
-            }catch (\Exception $error){
-                return response([
-                    'message'=>'Failed to send your email',
-                    'error'=>$error
-                ],401);
-            }
-        }else{
+        $subject = $validated['subject'];
+        try {
+            Mail::send('./email_templates/user_contact_email',$validated,function($message) use ($subject){
+                $message->to('filipp-tts@outlook.com','to web developer');
+                $message->subject($subject);
+                $message->cc('filipp-tts@outlook.com');
+            });
             return response([
-                'message'=>'Given data is incorrect'
+                'message'=>'Email send successfully'
+            ],201);
+        }catch (\Exception $error){
+            return response([
+                'message'=>'Failed to send your email',
+                'error'=>$error
             ],401);
         }
     }
