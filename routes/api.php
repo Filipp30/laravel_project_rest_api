@@ -25,7 +25,9 @@ Route::post('/contact/email',[ContactEmailController::class,'send_email']);
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('chat/create_new_chat_session',[ContactChatController::class,'create_new_chat_session']);
+    Route::get('chat/get_chat_session_messages',[ContactChatController::class,'get_chat_session_messages']);
     Route::post('chat/remove_chat_session',[ContactChatController::class,'remove_chat_session']);
+    Route::post('chat/add_message',[ContactChatController::class,'addMessage']);
 });
 
 

@@ -23,7 +23,7 @@ class ContactChatController extends Controller{
         return $session;
     }
 
-    public function getMessages(Request $request_data){
+    public function get_chat_session_messages(Request $request_data){
         $session=$request_data->get('chat_session');
         return ContactChat::with('user')
         ->where('session','=',$session)
@@ -32,7 +32,7 @@ class ContactChatController extends Controller{
     }
 
     public function addMessage(Request $request_data){
-        $user = Auth::user();
+        $user = auth()->user();
         $chat_session = $request_data->get('chat_session');
         $user_name = $user->name;
         $user_message = $request_data->get('input_message');
@@ -44,6 +44,9 @@ class ContactChatController extends Controller{
         $chat->message = $user_message;
         $chat->created_at = $time_stamp;
         $chat->save();
+        return response([
+            'message'=>'message send successfully'
+        ],201);
     }
 
     public function remove_chat_session(Request $request_data){
