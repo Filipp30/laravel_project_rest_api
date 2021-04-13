@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Auth;
 class ContactChatController extends Controller{
     public function create_new_chat_session(){
         //first update database before call Event !!! from Vue call api for update local WaitList
-        $user = Auth::user();
+        $user = auth()->user();
         $session = time();
-        $call = new ChatWaitingList();
-        $call->user_id = $user->getAuthIdentifier();
-        $call->session = $session;
-        $call->save();
+        $create_new_chat = new ChatWaitingList();
+        $create_new_chat->user_id = $user->getAuthIdentifier();
+        $create_new_chat->session = $session;
+        $create_new_chat->save();
         event(new NewChatSessionCreated($session));
         return $session;
     }
