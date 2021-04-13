@@ -12,7 +12,8 @@
         "laravel/framework": "^8.12",
         "laravel/sanctum": "^2.9",
         "laravel/tinker": "^2.5",
-      "ext-pdo": "*"
+        "ext-pdo": "*",
+        "pusher/pusher-php-server": "^5.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
