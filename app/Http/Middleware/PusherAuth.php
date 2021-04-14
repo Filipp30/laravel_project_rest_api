@@ -12,6 +12,6 @@ class PusherAuth
 //        $socket_id = $request->request->get("socket_id");
 //        $channel_name = $request->request->get("channel_name");
 //        $jwt_token = $request->headers->headers["authorization"][0];
-        return $next($request);
+//        return $next($request);
     }
 }
