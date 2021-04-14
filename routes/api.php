@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Contact\ContactChatController;
 use App\Http\Controllers\Contact\ContactEmailController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -30,7 +31,9 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('chat/add_message',[ContactChatController::class,'addMessage']);
 });
 
-
+Route::post('/pusher/auth',function (){
+    return true;
+})->middleware(['pusher.auth']);
 
 
 
