@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ChatWaitingList;
 use App\Models\ContactChat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 class ContactChatController extends Controller{
     public function create_new_chat_session(){
