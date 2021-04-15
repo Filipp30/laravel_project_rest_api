@@ -41,6 +41,9 @@ Route::post('/pusher/auth',function (Request $request){
 
 Route::middleware(['auth:sanctum','admin'])->group(function (){
 
+
+
+
 });
 
 

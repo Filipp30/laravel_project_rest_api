@@ -25,7 +25,11 @@ class LoginController extends Controller{
                 'message'=>'The provided credentials are incorrect.'
             ],401);
         }
-        return $user->createToken('jwt_token');
+
+        return response([
+            'jwt_token'=>$user->createToken('jwt_token'),
+            'isAdmin'=>$user['isAdmin']
+        ],201);
     }
 
     public function logout(){
