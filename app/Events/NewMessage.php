@@ -15,16 +15,16 @@ class NewMessage implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $session;
-    public $name;
+    public $user;
     public $message;
-    public $time;
+    public $created_at;
 
-    public function __construct($session,$username,$message,$time_stamp)
+    public function __construct($session,$user,$message,$time_stamp)
     {
         $this->session = $session;
         $this->message = $message;
-        $this->name = $username;
-        $this->time = $time_stamp;
+        $this->user = $user;
+        $this->created_at = $time_stamp;
     }
 
     public function broadcastOn()

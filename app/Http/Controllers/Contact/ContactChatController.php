@@ -34,10 +34,9 @@ class ContactChatController extends Controller{
     public function addMessage(Request $request_data){
         $user = auth()->user();
         $chat_session = $request_data->get('chat_session');
-        $user_name = $user->name;
         $user_message = $request_data->get('input_message');
         $time_stamp = gmdate("Y-m-d H:i:s");
-        event(new NewMessage($chat_session,$user_name,$user_message,$time_stamp));
+        event(new NewMessage($chat_session,$user,$user_message,$time_stamp));
         $chat = new ContactChat();
         $chat->user_id = $user->getAuthIdentifier();
         $chat->session = $chat_session;
