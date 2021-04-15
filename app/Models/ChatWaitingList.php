@@ -9,6 +9,7 @@ class ChatWaitingList extends Model
 {
     use HasFactory;
     public $timestamps = false;
+
     public function user(){
         return $this->BelongsTo(User::class,'user_id','id');
     }

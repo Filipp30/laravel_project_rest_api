@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Contact\ContactChatController;
@@ -41,7 +42,7 @@ Route::post('/pusher/auth',function (Request $request){
 
 Route::middleware(['auth:sanctum','admin'])->group(function (){
 
-
+Route::get('admin/contact/chat/chat_session_waiting_list',[ChatController::class,'get_chat_session_waiting_list']);
 
 
 });
