@@ -31,8 +31,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('chat/remove_chat_session',[ContactChatController::class,'remove_chat_session']);
     Route::post('chat/add_message',[ContactChatController::class,'addMessage']);
 
-
-
 });
 
 Route::post('/pusher/auth',function (Request $request){
