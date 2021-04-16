@@ -19,7 +19,6 @@ class NewChatSessionCreated implements ShouldBroadcast
         $this->session = $session;
     }
 
-
     public function broadcastOn()
     {
         return new PrivateChannel('my-channel');

@@ -20,6 +20,11 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/user', function() { return auth()->user();});
     Route::post('/logout',[LoginController::class,'logout']);
 });
+Route::post('/pusher/auth',function (Request $request){
+    $socket_id = $request->request->get("socket_id");
+    $thePusher = new Pusher('8a34625906a44e573ba7','f47f12dccf48e6e0286a','1169667',array('cluster'=>'eu'));
+    return response($thePusher->socket_auth('private-my-channel', $socket_id),200) ;
+});
 
 
 
@@ -34,16 +39,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
 });
 
-Route::post('/pusher/auth',function (Request $request){
-    $socket_id = $request->request->get("socket_id");
-    $thePusher = new Pusher('8a34625906a44e573ba7','f47f12dccf48e6e0286a','1169667',array('cluster'=>'eu'));
-    return response($thePusher->socket_auth('private-my-channel', $socket_id),200) ;
-});
-
 Route::middleware(['auth:sanctum','admin'])->group(function (){
-
-Route::get('admin/contact/chat/chat_session_waiting_list',[ChatController::class,'get_chat_session_waiting_list']);
-
+    Route::get('admin/contact/chat/chat_session_waiting_list',[ChatController::class,'get_chat_session_waiting_list']);
 
 });
 

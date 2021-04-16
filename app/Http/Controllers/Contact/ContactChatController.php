@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 
 class ContactChatController extends Controller{
+
     public function create_new_chat_session(){
         //first update database before call Event !!! from Vue call api for update local WaitList
         $user = auth()->user();
@@ -55,7 +56,5 @@ class ContactChatController extends Controller{
         ChatWaitingList::query()->where('session','=',$session)->delete();
         ContactChat::query()->where('session','=',$session)->delete();
     }
-
-
 
 }
