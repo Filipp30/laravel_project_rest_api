@@ -14,8 +14,7 @@
         "laravel/tinker": "^2.5",
         "ext-pdo": "*",
         "pusher/pusher-php-server": "^5.0",
-      "ext-json": "*",
-      "ext-http": "*"
+        "ext-json": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
