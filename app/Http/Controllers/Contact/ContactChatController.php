@@ -19,7 +19,8 @@ class ContactChatController extends Controller{
         $create_new_chat->user_id = $user->getAuthIdentifier();
         $create_new_chat->session = $session;
         $create_new_chat->save();
-        event(new NewChatSessionCreated($session));
+        $session_data = ChatWaitingList::with('user')->where('session','=',$session)->get();
+        event(new NewChatSessionCreated($session_data[0]));
         return $session;
     }
 
