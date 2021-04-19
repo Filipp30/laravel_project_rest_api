@@ -14,7 +14,7 @@ class LoginController extends Controller{
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string','min:8'],
         ]);
-        $user = User::where('email',$user_inputs['email'])->first();
+        $user = User::query()->where('email',$user_inputs['email'])->first();
         if (! $user){
             return response([
                 'message'=>'User not exist'

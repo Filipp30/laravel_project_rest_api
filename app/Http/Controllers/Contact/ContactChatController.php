@@ -22,7 +22,7 @@ class ContactChatController extends Controller{
         $create_new_chat->save();
         $session_data = ChatWaitingList::with('user')->where('session','=',$session)->get();
         event(new NewChatSessionCreated($session_data[0]));
-        return $session;
+        return response(['chat_session'=>$session],201);
     }
 
     public function get_chat_session_messages(Request $request_data){
@@ -63,6 +63,7 @@ class ContactChatController extends Controller{
         event(new ChatSessionRemoved($session));
         ChatWaitingList::query()->where('session','=',$session)->delete();
         ContactChat::query()->where('session','=',$session)->delete();
+        return response(['message'=>'chat_session removed'],201);
     }
 
 }
