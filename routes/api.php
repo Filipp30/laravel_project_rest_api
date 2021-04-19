@@ -25,7 +25,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
 Route::post('/pusher/auth',[PusherAuthController::class,'pusher_authentication']);
 
 
-
 //Contact-Page-Client : Email and Chat
 Route::post('/contact/email',[ContactEmailController::class,'send_email']);
 
