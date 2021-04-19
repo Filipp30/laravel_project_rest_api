@@ -27,6 +27,10 @@ class ContactChatController extends Controller{
 
     public function get_chat_session_messages(Request $request_data){
         $session=$request_data->get('chat_session');
+        $chat_session_exist = ChatWaitingList::query()->where('session','=',$session)->get();
+        if (!isset($chat_session_exist[0])){
+            return response(['message'=>'ChatSession not exist.Please exit the chatroom!'],401);
+        }
         return ContactChat::with('user')
         ->where('session','=',$session)
         ->orderBy('created_at','asc')
@@ -38,6 +42,10 @@ class ContactChatController extends Controller{
         $chat_session = $request_data->get('chat_session');
         $user_message = $request_data->get('input_message');
         $time_stamp = gmdate("Y-m-d H:i:s");
+        $chat_session_exist = ChatWaitingList::query()->where('session','=',$chat_session)->get();
+        if (!isset($chat_session_exist[0])){
+            return response(['message'=>'ChatSession not exist.Please exit the chatroom!'],401);
+        }
         event(new NewMessage($chat_session,$user,$user_message,$time_stamp));
         $chat = new ContactChat();
         $chat->user_id = $user->getAuthIdentifier();
