@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Contact;
 use App\Events\ChatSessionRemoved;
 use App\Events\NewChatSessionCreated;
 use App\Events\NewMessage;
+use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Controller;
 use App\Models\ChatWaitingList;
 use App\Models\ContactChat;
@@ -13,7 +14,7 @@ use Illuminate\Http\Request;
 class ContactChatController extends Controller{
 
     public function create_new_chat_session(){
-        //first update database before call Event !!! from Vue call api for update local WaitList
+//        first update database before call Event !!! from Vue call api for update local WaitList
         $user = auth()->user();
         $session = time();
         $create_new_chat = new ChatWaitingList();
@@ -22,6 +23,9 @@ class ContactChatController extends Controller{
         $create_new_chat->save();
         $session_data = ChatWaitingList::with('user')->where('session','=',$session)->get();
         event(new NewChatSessionCreated($session_data[0]));
+        $notification_to_admin = new NotificationController();
+        $notification_message = 'name: '.$user->name.'--session: '.$session;
+        $notification_to_admin->sendSmsNotification('+32483708133',$notification_message);
         return response(['chat_session'=>$session],201);
     }
 
