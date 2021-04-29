@@ -23,10 +23,17 @@ class ContactChatController extends Controller{
         $create_new_chat->save();
         $session_data = ChatWaitingList::with('user')->where('session','=',$session)->get();
         event(new NewChatSessionCreated($session_data[0]));
-        $notification_to_admin = new NotificationController();
-        $notification_message = 'name: '.$user->name.'--session: '.$session;
-        $notification_to_admin->sendSmsNotification('+32483708133',$notification_message);
+        $this->send_notification_if_new_session_created($user,$session);
         return response(['chat_session'=>$session],201);
+    }
+
+    public function send_notification_if_new_session_created($user,$session){
+        $notification_to_admin = new NotificationController();
+//        $notification_message = 'name: '.$user->name.'--session: '.$session;
+//        $notification_to_admin->sendSmsNotification('+32483708133',$notification_message);
+        $email_to = ["email"=>"filipp-tts@outlook.com"];
+        $data = ["user_name"=>$user->name, "user_email"=>$user->email, "session"=>$session];
+        $notification_to_admin->sendEmailNotification($email_to,$data);
     }
 
     public function get_chat_session_messages(Request $request_data){

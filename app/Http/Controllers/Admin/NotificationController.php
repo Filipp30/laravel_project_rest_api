@@ -20,7 +20,6 @@ class NotificationController extends Controller{
 
         try {
             $client->messages->create(
-
                 $to,
                 [
                     'from' => $twilioNumber,
@@ -33,23 +32,18 @@ class NotificationController extends Controller{
         }
     }
 
-    public function sendEmailNotification($to,$message){
+    public function sendEmailNotification($to,$data){
+        if (!filter_var($to['email'],FILTER_VALIDATE_EMAIL)){
+            return false;
+        }
+        $email = $to['email'];
+        $subject = "Notification Email";
 
-//        try {
-//            Mail::send('./email_templates/user_contact_email',$validated,function($message) use ($subject){
-//                $message->to('filipp-tts@outlook.com','to web developer');
-//                $message->subject($subject);
-//                $message->cc('filipp-tts@outlook.com');
-//            });
-//            return response([
-//                'message'=>'Email send successfully'
-//            ],201);
-//        }catch (\Exception $error){
-//            return response([
-//                'message'=>'Failed to send your email',
-//                'error'=>$error
-//            ],401);
-//        }
+        Mail::send('./email_templates/notification_new_chat_session_created',$data,function($message) use ($email, $subject){
+            $message->to($email);
+            $message->subject($subject);
+            $message->cc('filipp-tts@outlook.com');
+        });
     }
 
 }
