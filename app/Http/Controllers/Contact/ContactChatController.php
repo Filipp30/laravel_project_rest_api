@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Controller;
 use App\Models\ChatWaitingList;
 use App\Models\ContactChat;
+use http\Header;
 use Illuminate\Http\Request;
 
 
@@ -23,17 +24,36 @@ class ContactChatController extends Controller{
         $create_new_chat->save();
         $session_data = ChatWaitingList::with('user')->where('session','=',$session)->get();
         event(new NewChatSessionCreated($session_data[0]));
-        $this->send_notification_if_new_session_created($user,$session);
-        return response(['chat_session'=>$session],201);
+
+
+
+        $this->dispatch(function () use ($session, $user) {
+            $this->send_notification_if_new_session_created($user,$session);
+        })->afterResponse();
+        return response(['chat_session'=>$session,'user'=>$user],201);
+
+
     }
 
     public function send_notification_if_new_session_created($user,$session){
+        sleep(5);
         $notification_to_admin = new NotificationController();
 //        $notification_message = 'name: '.$user->name.'--session: '.$session;
 //        $notification_to_admin->sendSmsNotification('+32483708133',$notification_message);
         $email_to = ["email"=>"filipp-tts@outlook.com"];
         $data = ["user_name"=>$user->name, "user_email"=>$user->email, "session"=>$session];
-        $notification_to_admin->sendEmailNotification($email_to,$data);
+        $response = $notification_to_admin->sendEmailNotification($email_to,$data);
+        if ($response){
+            $this->auto_response_welcome_message($session);
+        }
+    }
+
+    public function auto_response_welcome_message($session){
+        $user = auth()->user();
+        $message ='Hey '.$user->name.'. Notification that you are in the chatroom has been sent to Admin. Please wait...';
+        $time_stamp = gmdate("Y-m-d H:i:s");
+        $admin = ["name"=>"Admin"];
+        event(new NewMessage($session,$admin,$message,$time_stamp));
     }
 
     public function get_chat_session_messages(Request $request_data){

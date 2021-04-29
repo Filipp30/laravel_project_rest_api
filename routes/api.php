@@ -18,6 +18,8 @@ Route::post('/password/email',[ForgotPasswordController::class,'forgot']);
 Route::get('/password.reset',function (){return view('reset_password');});
 Route::post('/password/reset',[ForgotPasswordController::class,'reset']);
 
+
+
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/user', function() { return auth()->user();});
     Route::post('/logout',[LoginController::class,'logout']);
@@ -36,6 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('chat/remove_chat_session',[ContactChatController::class,'remove_chat_session']);
     Route::post('chat/add_message',[ContactChatController::class,'addMessage']);
 });
+
+
 
 
 

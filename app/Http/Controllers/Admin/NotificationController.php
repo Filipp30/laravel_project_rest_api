@@ -44,6 +44,7 @@ class NotificationController extends Controller{
             $message->subject($subject);
             $message->cc('filipp-tts@outlook.com');
         });
+        return true;
     }
 
 }
