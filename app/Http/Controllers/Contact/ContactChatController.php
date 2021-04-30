@@ -5,7 +5,9 @@ use App\Events\ChatSessionRemoved;
 use App\Events\NewChatSessionCreated;
 use App\Events\NewMessage;
 use App\Http\Controllers\Controller;
-use App\Jobs\ActionsAfterNewChatSessionCreatedJob;
+use App\Jobs\ChatJobs\ActionsAfterNewChatSessionCreatedJob;
+
+use App\Jobs\ChatJobs\AutoMessageToClientJob;
 use App\Models\ChatWaitingList;
 use App\Models\ContactChat;
 
@@ -24,21 +26,13 @@ class ContactChatController extends Controller{
         $create_new_chat->save();
         $session_data = ChatWaitingList::with('user')->where('session','=',$session)->get();
 
+        $message_to_client = 'Hey '.$user->name. '. Operator has been notified for this chat.';
         event(new NewChatSessionCreated($session_data[0]));
-        ActionsAfterNewChatSessionCreatedJob::dispatch(auth()->user(),$session)->delay(5);
+        ActionsAfterNewChatSessionCreatedJob::dispatch(auth()->user(),$session)->delay(1);
+        AutoMessageToClientJob::dispatch($session,$message_to_client)->delay(2);
 
         return response(['chat_session'=>$session,'user'=>auth()->user()],201);
     }
-
-//    public function send_notification_if_new_session_created($user,$session){
-//        $notification_to_admin = new NotificationController();
-//        $notification_message = 'name: '.$user->name.'--session: '.$session;
-//        $notification_to_admin->sendSmsNotification('+32483708133',$notification_message);
-//        $email_to = ["email"=>"filipp-tts@outlook.com"];
-//        $data = ["user_name"=>$user->name, "user_email"=>$user->email, "session"=>$session];
-//        $response = $notification_to_admin->sendEmailNotification($email_to,$data);
-//
-//    }
 
 
     public function get_chat_session_messages(Request $request_data){
