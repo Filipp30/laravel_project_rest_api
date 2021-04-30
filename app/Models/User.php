@@ -31,4 +31,8 @@ class User extends Authenticatable {
         return $this->hasMany(ContactChat::class,'user_id','id');
     }
 
+    public function notifications(){
+        return $this->hasOne(NotificationAdminList::class,'admin_id','id');
+    }
+
 }
