@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateContactChatsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('contact_chats', function (Blueprint $table) {
@@ -23,11 +19,7 @@ class CreateContactChatsTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('contact_chats');

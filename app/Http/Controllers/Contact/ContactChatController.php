@@ -6,13 +6,10 @@ use App\Events\NewChatSessionCreated;
 use App\Events\NewMessage;
 use App\Http\Controllers\Controller;
 use App\Jobs\ChatJobs\ActionsAfterNewChatSessionCreatedJob;
-
 use App\Jobs\ChatJobs\AutoMessageToClientJob;
 use App\Models\ChatWaitingList;
 use App\Models\ContactChat;
-
 use Illuminate\Http\Request;
-
 
 class ContactChatController extends Controller{
 
@@ -25,15 +22,12 @@ class ContactChatController extends Controller{
         $create_new_chat->session = $session;
         $create_new_chat->save();
         $session_data = ChatWaitingList::with('user')->where('session','=',$session)->get();
-
         $message_to_client = 'Hey '.$user->name. '. Operator has been notified for this chat.';
         event(new NewChatSessionCreated($session_data[0]));
         ActionsAfterNewChatSessionCreatedJob::dispatch(auth()->user(),$session)->delay(1);
         AutoMessageToClientJob::dispatch($session,$message_to_client)->delay(2);
-
         return response(['chat_session'=>$session,'user'=>auth()->user()],201);
     }
-
 
     public function get_chat_session_messages(Request $request_data){
         $session=$request_data->get('chat_session');

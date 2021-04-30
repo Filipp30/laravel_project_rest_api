@@ -6,7 +6,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Contact\ContactChatController;
 use App\Http\Controllers\Contact\ContactEmailController;
 use App\Http\Controllers\Contact\PusherAuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -19,14 +18,11 @@ Route::get('/password.reset',function (){return view('reset_password');});
 Route::post('/password/reset',[ForgotPasswordController::class,'reset']);
 
 
-
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/user', function() { return auth()->user();});
     Route::post('/logout',[LoginController::class,'logout']);
     Route::post('/pusher/auth',[PusherAuthController::class,'pusher_authentication']);
 });
-
-
 
 
 //Contact-Page-Client : Email and Chat
@@ -38,9 +34,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::post('chat/remove_chat_session',[ContactChatController::class,'remove_chat_session']);
     Route::post('chat/add_message',[ContactChatController::class,'addMessage']);
 });
-
-
-
 
 
 Route::middleware(['auth:sanctum','admin'])->group(function (){
