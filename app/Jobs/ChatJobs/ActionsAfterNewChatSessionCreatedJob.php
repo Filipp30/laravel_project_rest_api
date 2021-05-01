@@ -24,6 +24,5 @@ class ActionsAfterNewChatSessionCreatedJob implements ShouldQueue
     public function handle(){
         $notification_to_admins = new NotificationController();
         $notification_to_admins->sendNotificationToAdmins($this->user,$this->session);
-        logs()->info('send notification(sms and/or email) to admins:new chat-session was created.');
     }
 }

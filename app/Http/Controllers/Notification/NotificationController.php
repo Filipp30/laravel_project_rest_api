@@ -9,44 +9,41 @@ use Twilio\Exceptions\TwilioException;
 use Twilio\Http\CurlClient;
 use Twilio\Rest\Client;
 
-
 class NotificationController extends Controller{
 
     //first check if admin enabled the notification methods
 
     public function sendNotificationToAdmins($requested_user,$new_chat_session){
 
-         $list = NotificationAdminList::with('user')
-             ->where('sms_new_chat_session_created','=','1')
-             ->orWhere('email_new_chat_session_created','=','1')
-             ->get();
+         $enabled_notifications_list = NotificationAdminList::with('user')
+         ->where('sms_new_chat_session_created','=','1')
+         ->orWhere('email_new_chat_session_created','=','1')
+         ->get();
 
+         $log_admins_notificator = [];
 
-        $data_response_testing = [];
-         foreach ($list as $enabled){
+         $client_information_for_email_template = [
+             "user_name"=>$requested_user->name,
+             "user_email"=>$requested_user->email,
+             "session"=>$new_chat_session
+         ];
+         $client_information_for_sms_template = 'name: '.$requested_user->name.'--session: '.$new_chat_session;
 
+         foreach ($enabled_notifications_list as $enabled){
              if ($enabled->sms_new_chat_session_created){
-                 $data_response_testing[]=$enabled->user->name.' -sms vklutjin';
+                 $status = $this->sendSmsNotification($enabled->user->phone_number,$client_information_for_sms_template);
+                 $log_admins_notificator[] = $enabled->user->name.' sms_send_status : '.$status;
              }
              if ($enabled->email_new_chat_session_created){
-                 $data_response_testing[]=$enabled->user->name.' -email vklutjin';
+                 $status = $this->sendEmailNotification($enabled->user->email,$client_information_for_email_template);
+                 $log_admins_notificator[] = $enabled->user->name.' email_send_status : '.$status;
              }
          }
-        return response($data_response_testing);
 
-
-
-//        $notification_message = 'name: '.$requested_user->name.'--session: '.$new_chat_session;
-//        $response_sms_sending = $notification_to_admin->sendSmsNotification('+32483708133',$notification_message);
-//
-//        $email_to = ["email"=>"filipp-tts@outlook.com"];
-//        $data = ["user_name"=>$this->user->name, "user_email"=>$this->user->email, "session"=>$this->session];
-//        $response_email_sending = $notification_to_admin->sendEmailNotification($email_to,$data);
-
-
-//        return response($data);
+         logs()->info('NotificationController->sendNotificationToAdmins:
+         requested user: '.$requested_user->name.'--'.$requested_user->email.' .
+         send to : '.implode(',',$log_admins_notificator));
     }
-
 
     public function sendSmsNotification($to,$message){
         $accountSid = env('TWILIO_ACCOUNT_SID');
@@ -55,15 +52,8 @@ class NotificationController extends Controller{
         $client = new Client($accountSid, $authToken);
         $curlOptions = [ CURLOPT_SSL_VERIFYHOST => false, CURLOPT_SSL_VERIFYPEER => false];
         $client->setHttpClient(new CurlClient($curlOptions));
-
         try {
-            $client->messages->create(
-                $to,
-                [
-                    'from' => $twilioNumber,
-                    'body' => $message
-                ]
-            );
+            $client->messages->create( $to, ['from' => $twilioNumber, 'body' => $message]);
             return true;
         }catch (TwilioException $e){
             return $e;
@@ -71,16 +61,13 @@ class NotificationController extends Controller{
     }
 
     public function sendEmailNotification($to,$data){
-        if (!filter_var($to['email'],FILTER_VALIDATE_EMAIL)){
+        if (!filter_var($to,FILTER_VALIDATE_EMAIL)){
             return false;
         }
-        $email = $to['email'];
-        $subject = "Notification Email";
-
-        Mail::send('./email_templates/notification_new_chat_session_created',$data,function($message) use ($email, $subject){
-            $message->to($email);
+        $subject = "Notification: new chat session was created";
+        Mail::send('./email_templates/notification_new_chat_session_created',$data,function($message) use ($to, $subject){
+            $message->to($to);
             $message->subject($subject);
-            $message->cc('filipp-tts@outlook.com');
         });
         return true;
     }
