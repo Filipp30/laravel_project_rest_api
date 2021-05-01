@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
+
+use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class NotificationAdminList extends Model
+class CreateAdminNotificationList extends Migration
 {
 
     public function up()
