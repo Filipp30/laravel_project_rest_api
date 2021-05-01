@@ -71,5 +71,4 @@ class NotificationController extends Controller{
         });
         return true;
     }
-
 }

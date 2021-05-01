@@ -16,8 +16,6 @@ class AutoMessageToClientJob implements ShouldQueue
     private $chat_session;
     private $message;
 
-
-
     public function __construct($chat_session,$message){
         $this->chat_session = $chat_session;
         $this->message = $message;

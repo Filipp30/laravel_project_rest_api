@@ -15,7 +15,7 @@ class CreateChatWaitingListsTable extends Migration
     {
         Schema::create('chat_waiting_lists', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned();
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->integer('session')->nullable(false);
             $table->timestamp('created_at');
         });

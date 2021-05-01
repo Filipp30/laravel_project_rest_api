@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Contact;
 use App\Events\ChatSessionRemoved;
 use App\Events\NewChatSessionCreated;
 use App\Events\NewMessage;
-
 use App\Http\Controllers\Controller;
-
-use App\Http\Controllers\Notification\NotificationController;
 use App\Jobs\ChatJobs\ActionsAfterNewChatSessionCreatedJob;
 use App\Jobs\ChatJobs\AutoMessageToClientJob;
 use App\Models\ChatWaitingList;
@@ -18,24 +15,19 @@ class ContactChatController extends Controller{
 
     public function create_new_chat_session(){
 //        first update database before call Event !!! from Vue call api for update local WaitList
-//        $user = auth()->user();
+        $user = auth()->user();
         $session = time();
-//        $create_new_chat = new ChatWaitingList();
-//        $create_new_chat->user_id = $user->getAuthIdentifier();
-//        $create_new_chat->session = $session;
-//        $create_new_chat->save();
-//        $session_data = ChatWaitingList::with('user')->where('session','=',$session)->get();
-//        $message_to_client = 'Hey '.$user->name. '. Operator has been notified for this chat.';
-//        event(new NewChatSessionCreated($session_data[0]));
+        $create_new_chat = new ChatWaitingList();
+        $create_new_chat->user_id = $user->getAuthIdentifier();
+        $create_new_chat->session = $session;
+        $create_new_chat->save();
+        $session_data = ChatWaitingList::with('user')->where('session','=',$session)->get();
+        $message_to_client = 'Hey '.$user->name. '. Operator has been notified for this chat.';
 
-//        ActionsAfterNewChatSessionCreatedJob::dispatch(auth()->user(),$session)->delay(1);
-
-//        AutoMessageToClientJob::dispatch($session,$message_to_client)->delay(2);
-//        return response(['chat_session'=>$session,'user'=>auth()->user()],201);
-
-        $notController = new NotificationController;
-        $test_response = $notController->sendNotificationToAdmins(auth()->user(),$session);
-        return response($test_response);
+        event(new NewChatSessionCreated($session_data[0]));
+        ActionsAfterNewChatSessionCreatedJob::dispatch(auth()->user(),$session)->delay(1);
+        AutoMessageToClientJob::dispatch($session,$message_to_client)->delay(3);
+        return Response(['chat_session'=>$session,'user'=>auth()->user()],201);
     }
 
     public function get_chat_session_messages(Request $request_data){

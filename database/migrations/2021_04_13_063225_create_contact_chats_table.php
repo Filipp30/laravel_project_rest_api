@@ -12,8 +12,7 @@ class CreateContactChatsTable extends Migration
         Schema::create('contact_chats', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('session');
-            $table->integer('user_id');
-//            $table->unsignedInteger('user_id');
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->text('message');
             $table->timestamps();
         });

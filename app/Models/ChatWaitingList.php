@@ -11,11 +11,8 @@ class ChatWaitingList extends Model
 
     public $timestamps = false;
 
-
-
     public function user(){
         return $this->BelongsTo(User::class,'user_id','id');
     }
-
 
 }

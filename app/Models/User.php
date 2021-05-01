@@ -35,4 +35,8 @@ class User extends Authenticatable {
         return $this->hasOne(NotificationAdminList::class,'admin_id','id');
     }
 
+    public function waiting(){
+        return $this->hasOne(ChatWaitingList::class,'user_id','id');
+    }
+
 }
