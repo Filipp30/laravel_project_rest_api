@@ -25,8 +25,8 @@ class ContactChatController extends Controller{
         $message_to_client = 'Hey '.$user->name. '. Operator has been notified for this chat.';
 
         event(new NewChatSessionCreated($session_data[0]));
-        ActionsAfterNewChatSessionCreatedJob::dispatch(auth()->user(),$session)->delay(1);
-        AutoMessageToClientJob::dispatch($session,$message_to_client)->delay(3);
+        ActionsAfterNewChatSessionCreatedJob::dispatch(auth()->user(),$session);
+        AutoMessageToClientJob::dispatch($session,$message_to_client)->delay(2);
         return Response(['chat_session'=>$session,'user'=>auth()->user()],201);
     }
 
