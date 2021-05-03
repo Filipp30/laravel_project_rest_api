@@ -25,7 +25,8 @@ class NotificationController extends Controller{
          $client_information_for_email_template = [
              "user_name"=>$requested_user->name,
              "user_email"=>$requested_user->email,
-             "session"=>$new_chat_session
+             "session"=>$new_chat_session,
+             "date_time"=>date("Y-m-d H:i:s"),
          ];
          $client_information_for_sms_template = 'name: '.$requested_user->name.'--session: '.$new_chat_session;
 
