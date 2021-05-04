@@ -27,6 +27,6 @@ class NewUserCreatedNotificationJob implements ShouldQueue
     public function handle()
     {
         Notification::send($this->user,new NewUserCreatedNotification());
-        logs()->info('NewUserCreatedNotificationJob called --> redirect to NotificationsToAdmins');
+        logs()->info('NewUserCreatedNotificationJob called --> redirect to Notification');
     }
 }
