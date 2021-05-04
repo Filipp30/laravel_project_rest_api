@@ -11,8 +11,8 @@ use Twilio\Rest\Client;
 
 class NotificationController extends Controller{
 
-    //first check if admin enabled the notification methods
 
+    // Send notification to ALL Admins when new chat session is created
     public function sendNotificationToAdmins($requested_user,$new_chat_session){
 
          $enabled_notifications_list = NotificationAdminList::with('user')
@@ -47,9 +47,9 @@ class NotificationController extends Controller{
     }
 
     public function sendSmsNotification($to,$message){
-        $accountSid = env('TWILIO_ACCOUNT_SID');
-        $authToken = env('TWILIO_AUTH_TOKEN');
-        $twilioNumber = env('TWILIO_NUMBER');
+        $accountSid = getenv('TWILIO_ACCOUNT_SID');
+        $authToken = getenv('TWILIO_AUTH_TOKEN');
+        $twilioNumber = getenv('TWILIO_NUMBER');
         $client = new Client($accountSid, $authToken);
         $curlOptions = [ CURLOPT_SSL_VERIFYHOST => false, CURLOPT_SSL_VERIFYPEER => false];
         $client->setHttpClient(new CurlClient($curlOptions));
@@ -65,7 +65,7 @@ class NotificationController extends Controller{
         if (!filter_var($to,FILTER_VALIDATE_EMAIL)){
             return false;
         }
-        $subject = "Notification: new chat session was created";
+        $subject = "NotificationsToAdmins: new chat session was created";
         Mail::send('./email_templates/notification_new_chat_session_created',$data,function($message) use ($to, $subject){
             $message->to($to);
             $message->subject($subject);
