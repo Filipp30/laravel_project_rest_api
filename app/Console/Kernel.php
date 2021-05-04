@@ -15,8 +15,11 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command(sendLogFileToAdmin::class)->everySixHours();
+        $schedule->command(sendLogFileToAdmin::class)->everySixHours();
 
+        $schedule->command('queue:work')
+            ->everyMinute()
+            ->withoutOverlapping(3);
     }
 
     protected function commands()
