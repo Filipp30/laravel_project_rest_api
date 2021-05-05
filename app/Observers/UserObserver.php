@@ -4,8 +4,6 @@ namespace App\Observers;
 
 use App\Jobs\ModelNotificationJobs\NewUserCreatedNotificationJob;
 use App\Models\User;
-use App\Notifications\NewUserCreatedNotification;
-use Illuminate\Support\Facades\Notification;
 
 class UserObserver
 {
@@ -14,13 +12,12 @@ class UserObserver
 
     public function created(User $user){
         NewUserCreatedNotificationJob::dispatch($user);
-        logs()->info('UserObserver called ---> redirect ot job');
     }
 
 
     public function updated(User $user)
     {
-        //
+
     }
 
 

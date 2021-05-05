@@ -47,10 +47,13 @@ class NotificationController extends Controller{
     }
 
     public function sendSmsNotification($to,$message){
-        $accountSid = getenv('TWILIO_ACCOUNT_SID');
-        $authToken = getenv('TWILIO_AUTH_TOKEN');
-        $twilioNumber = getenv('TWILIO_NUMBER');
-        $client = new Client($accountSid, $authToken);
+
+        $twilioNumber = config('twilio.twilio.from');
+        $client = new Client(
+            config('twilio.twilio.sid'),
+            config('twilio.twilio.token')
+        );
+
         $curlOptions = [ CURLOPT_SSL_VERIFYHOST => false, CURLOPT_SSL_VERIFYPEER => false];
         $client->setHttpClient(new CurlClient($curlOptions));
         try {
@@ -65,7 +68,7 @@ class NotificationController extends Controller{
         if (!filter_var($to,FILTER_VALIDATE_EMAIL)){
             return false;
         }
-        $subject = "NotificationsToAdmins: new chat session was created";
+        $subject = "Notification: new chat session was created";
         Mail::send('./email_templates/notification_new_chat_session_created',$data,function($message) use ($to, $subject){
             $message->to($to);
             $message->subject($subject);

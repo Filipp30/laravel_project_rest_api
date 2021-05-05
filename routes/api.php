@@ -38,7 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
 Route::middleware(['auth:sanctum','admin'])->group(function (){
     Route::get('admin/contact/chat/chat_session_waiting_list',[ChatController::class,'get_chat_session_waiting_list']);
-
 });
+
+
 
 
