@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ContactChat extends Model
 {
     use HasFactory;
+
+    protected $table = 'contact_chats';
     public $timestamps = false;
 
     public function user(){

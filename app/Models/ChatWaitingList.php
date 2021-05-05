@@ -9,6 +9,7 @@ class ChatWaitingList extends Model
 {
     use HasFactory;
 
+    protected $table = 'chat_waiting_lists';
     public $timestamps = false;
 
     public function user(){
