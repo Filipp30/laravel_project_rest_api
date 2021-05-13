@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Contact\ContactChatController;
 use App\Http\Controllers\Contact\ContactEmailController;
 use App\Http\Controllers\Contact\PusherAuthController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -40,6 +41,9 @@ Route::middleware(['auth:sanctum','admin'])->group(function (){
     Route::get('admin/contact/chat/chat_session_waiting_list',[ChatController::class,'get_chat_session_waiting_list']);
 });
 
-
-
+//test routes for File Storage
+Route::post('add/file',[TestController::class,'add_file']);
+Route::get('get/file',[TestController::class,'get_file']);
+Route::get('delete/file',[TestController::class,'delete_file']);
+Route::get('get/dir',[TestController::class,'get_dir']);
 
