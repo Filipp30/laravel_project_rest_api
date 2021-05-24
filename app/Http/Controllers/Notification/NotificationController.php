@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Notification;
 
 use App\Http\Controllers\Controller;
 use App\Models\NotificationAdminList;
+use App\Services\Contracts\TwilioSmsContract;
 use Illuminate\Support\Facades\Mail;
-use Twilio\Exceptions\TwilioException;
-use Twilio\Http\CurlClient;
-use Twilio\Rest\Client;
 
 class NotificationController extends Controller{
 
@@ -46,22 +44,8 @@ class NotificationController extends Controller{
          send to : '.implode(',',$log_admins_notificator));
     }
 
-    public function sendSmsNotification($to,$message){
-
-        $twilioNumber = config('twilio.twilio.from');
-        $client = new Client(
-            config('twilio.twilio.sid'),
-            config('twilio.twilio.token')
-        );
-
-        $curlOptions = [ CURLOPT_SSL_VERIFYHOST => false, CURLOPT_SSL_VERIFYPEER => false];
-        $client->setHttpClient(new CurlClient($curlOptions));
-        try {
-            $client->messages->create( $to, ['from' => $twilioNumber, 'body' => $message]);
-            return true;
-        }catch (TwilioException $e){
-            return $e;
-        }
+    public function sendSmsNotification($to,$message, TwilioSmsContract $twilioSmsContract){
+        $twilioSmsContract->send($to,$message);
     }
 
     public function sendEmailNotification($to,$data){
