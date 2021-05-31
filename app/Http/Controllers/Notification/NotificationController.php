@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Notification;
 
 use App\Http\Controllers\Controller;
 use App\Models\NotificationAdminList;
+use App\Providers\TwilioServiceProvider;
 use App\Services\Contracts\TwilioSmsContract;
 use Illuminate\Support\Facades\Mail;
 
@@ -44,8 +45,9 @@ class NotificationController extends Controller{
          send to : '.implode(',',$log_admins_notificator));
     }
 
-    public function sendSmsNotification($to,$message, TwilioSmsContract $twilioSmsContract){
-        $twilioSmsContract->send($to,$message);
+    public function sendSmsNotification($to,$message){
+        return TwilioSmsContract::class->send($to,$message);
+//        return $twilioSmsContract->send($to,$message);
     }
 
     public function sendEmailNotification($to,$data){
