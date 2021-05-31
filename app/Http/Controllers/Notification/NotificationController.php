@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Mail;
 
 class NotificationController extends Controller{
 
+    private $twilioSmsContract;
+
+    public function __construct(TwilioSmsContract $twilioSmsContract){
+        $this->twilioSmsContract = $twilioSmsContract;
+    }
 
     // Send notification to ALL Admins when new chat session is created
     public function sendNotificationToAdmins($requested_user,$new_chat_session){
@@ -31,7 +36,7 @@ class NotificationController extends Controller{
 
          foreach ($enabled_notifications_list as $enabled){
              if ($enabled->sms_new_chat_session_created){
-                 $status = $this->sendSmsNotification($enabled->user->phone_number,$client_information_for_sms_template);
+                 $status = $this->sendSmsNotification($enabled->user->phone_number,$client_information_for_sms_template );
                  $log_admins_notificator[] = $enabled->user->name.' sms_send_status : '.$status;
              }
              if ($enabled->email_new_chat_session_created){
@@ -46,8 +51,7 @@ class NotificationController extends Controller{
     }
 
     public function sendSmsNotification($to,$message){
-        return TwilioSmsContract::class->send($to,$message);
-//        return $twilioSmsContract->send($to,$message);
+           return $this->twilioSmsContract->send($to,$message);
     }
 
     public function sendEmailNotification($to,$data){

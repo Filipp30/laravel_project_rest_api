@@ -12,9 +12,7 @@ class TwilioServiceProvider extends ServiceProvider{
     //bind interface with class
 
     public function register(){
-        $this->app->bind(TwilioSmsContract::class,function ($app){
-            return new TwilioSmsService();
-        });
+        $this->app->bind(TwilioSmsContract::class,TwilioSmsService::class);
     }
 
 }
