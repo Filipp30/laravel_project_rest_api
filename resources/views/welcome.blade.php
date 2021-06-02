@@ -12,6 +12,4 @@
     <h3>filipp-tts@outlook.com</h3>
     </body>
 
-    <a href="{{route('auth.facebook')}}">login</a>
-
 </html>
