@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ChatController;
+use App\Http\Controllers\Auth\FacebookLoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Contact\ContactChatController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Contact\PusherAuthController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use Laravel\Socialite\Facades\Socialite;
 
 
 //Authentication routes
@@ -17,6 +19,13 @@ Route::post('/login',[LoginController::class,'login']);
 Route::post('/password/email',[ForgotPasswordController::class,'forgot']);
 Route::get('/password.reset',function (){return view('reset_password');});
 Route::post('/password/reset',[ForgotPasswordController::class,'reset']);
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('facebook')->redirect();
+});
+Route::get('/auth/callback',[FacebookLoginController::class,'loginWitchFacebookCallBack']);
+
+
 
 
 Route::middleware(['auth:sanctum'])->group(function(){

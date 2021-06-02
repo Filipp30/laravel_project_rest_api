@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-curl": "*",
         "ext-json": "*",
         "ext-pdo": "*",
         "fideloper/proxy": "^4.4",
@@ -13,10 +14,10 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
         "laravel/sanctum": "^2.9",
+        "laravel/socialite": "^5.2",
         "laravel/tinker": "^2.5",
         "pusher/pusher-php-server": "^5.0",
-        "twilio/sdk": "^6.22",
-        "ext-curl": "*"
+        "twilio/sdk": "^6.22"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
