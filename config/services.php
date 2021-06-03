@@ -33,7 +33,7 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_ID'),
         'client_secret' => env('FACEBOOK_SECRET'),
-        'redirect' => 'https://stuworld.space/auth/facebook/callback',
+        'redirect' => 'https://stuworld.space/api/auth/callback',
     ],
 
 ];
