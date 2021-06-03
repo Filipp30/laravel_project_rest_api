@@ -44,7 +44,7 @@ class FacebookLoginController extends Controller{
 //        }
         $user =  Socialite::driver('google')->stateless()->user();
 
-        return view('user',['user'=>$user]);
+        return view('user',['user'=>$user->getId()]);
 
     }
 
