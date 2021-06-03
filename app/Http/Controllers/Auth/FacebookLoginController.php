@@ -11,8 +11,13 @@ use Laravel\Socialite\Facades\Socialite;
 class FacebookLoginController extends Controller{
 
 
-    public function redirectFacebook(){
-        return Socialite::driver('facebook')->redirect();
+    public function auth_redirect_fb(){
+        return response(
+          [
+              'auth'=>Socialite::driver('facebook')->stateless()->redirect()->getTargetUrl()
+          ],
+          201
+        );
     }
 
 

@@ -7,9 +7,7 @@
 
 </head>
 <body>
-<h1>Laravel Rest API </h1>
-<h2>Created by Filipp.G</h2>
-<h3>filipp-tts@outlook.com</h3>
+<h1>Redirecting from Facebook</h1>
 <div>
     <h1>{{$user}}</h1>
 </div>

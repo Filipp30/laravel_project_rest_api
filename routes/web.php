@@ -11,9 +11,9 @@ Route::get('/', function () {
 Route::view('forgot_password', 'auth.reset_password')->name('password.reset');
 
 
-Route::get('/auth/facebook',[FacebookLoginController::class,'redirectFacebook'])->name('auth.facebook');
-
-Route::get('/auth/facebook/callback',function (){
-    $user = Socialite::driver('facebook')->user();
-    return view('user',['user'=>$user]);
-});
+//Route::get('/auth/facebook',[FacebookLoginController::class,'redirectFacebook'])->name('auth.facebook');
+//
+//Route::get('/auth/facebook/callback',function (){
+//    $user = Socialite::driver('facebook')->user();
+//    return view('user',['user'=>$user]);
+//});
