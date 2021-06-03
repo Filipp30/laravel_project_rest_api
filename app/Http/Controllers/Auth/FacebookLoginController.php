@@ -21,8 +21,8 @@ class FacebookLoginController extends Controller{
     }
 
 
-    public function facebookCallBack(){
-        try {
+    public function fb_login_call_back(){
+//        try {
             $user = Socialite::driver('facebook')->user();
 //            $isUser = User::query()->where('fb_id', $user->id)->first();
 
@@ -40,11 +40,14 @@ class FacebookLoginController extends Controller{
 //                ],201);
 //            }
 
-            return redirect('/user');
+//            return redirect('/user');
 
-        }catch (Exception $e){
-            dd($e->getMessage());
-        }
+//        }catch (Exception $e){
+//            dd($e->getMessage());
+//        }
+        $user = Socialite::driver('facebook')->user();
+    return view('user',['user'=>$user]);
+
     }
 
 

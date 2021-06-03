@@ -21,7 +21,7 @@ Route::get('/password.reset',function (){return view('reset_password');});
 Route::post('/password/reset',[ForgotPasswordController::class,'reset']);
 
 Route::get('/auth/redirect/fb',[FacebookLoginController::class, 'auth_redirect_fb']);
-Route::get('/auth/callback',[FacebookLoginController::class,'loginWitchFacebookCallBack']);
+Route::get('/auth/callback',[FacebookLoginController::class,'fb_login_call_back']);
 
 
 
