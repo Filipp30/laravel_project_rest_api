@@ -20,10 +20,10 @@ Route::post('/password/email',[ForgotPasswordController::class,'forgot']);
 Route::get('/password.reset',function (){return view('reset_password');});
 Route::post('/password/reset',[ForgotPasswordController::class,'reset']);
 
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('facebook')->redirect();
-});
-Route::get('/auth/callback',[FacebookLoginController::class,'loginWitchFacebookCallBack']);
+//Route::get('/auth/redirect', function () {
+//    return Socialite::driver('facebook')->redirect();
+//});
+//Route::get('/auth/callback',[FacebookLoginController::class,'loginWitchFacebookCallBack']);
 
 
 
