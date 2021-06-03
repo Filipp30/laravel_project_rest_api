@@ -15,5 +15,5 @@ Route::get('/auth/facebook',[FacebookLoginController::class,'redirectFacebook'])
 
 Route::get('/auth/facebook/callback',function (){
     $user = Socialite::driver('facebook')->user();
-    return view('welcome',[$user]);
+    return view('user',['user'=>$user]);
 });

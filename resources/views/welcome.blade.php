@@ -11,6 +11,7 @@
     <h2>Created by Filipp.G</h2>
     <h3>filipp-tts@outlook.com</h3>
        <a href="{{route('auth.facebook')}}">Login with facebook</a>
+
     </body>
 
 </html>

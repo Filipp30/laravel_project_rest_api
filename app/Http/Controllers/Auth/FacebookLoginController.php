@@ -35,7 +35,7 @@ class FacebookLoginController extends Controller{
 //                ],201);
 //            }
 
-            return redirect('/welcome');
+            return redirect('/user');
 
         }catch (Exception $e){
             dd($e->getMessage());
