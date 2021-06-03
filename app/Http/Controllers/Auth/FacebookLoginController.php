@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Exception;
-use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
 class FacebookLoginController extends Controller{
@@ -23,7 +20,7 @@ class FacebookLoginController extends Controller{
 
     public function fb_login_call_back(){
 //        try {
-            $user = Socialite::driver('facebook')->user();
+//            $user = Socialite::driver('facebook')->user();
 //            $isUser = User::query()->where('fb_id', $user->id)->first();
 
 //            if ($isUser){
@@ -45,8 +42,9 @@ class FacebookLoginController extends Controller{
 //        }catch (Exception $e){
 //            dd($e->getMessage());
 //        }
-        $user = Socialite::driver('facebook')->user();
-    return view('user',['user'=>$user]);
+        $user =  Socialite::driver('google')->stateless()->user();
+
+        return view('user',['user'=>$user]);
 
     }
 
