@@ -35,5 +35,10 @@ return [
         'client_secret' => env('FACEBOOK_SECRET'),
         'redirect' => 'https://stuworld.space/api/auth/callback',
     ],
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => 'https://stuworld.space/api/auth/google/callback'
+    ],
 
 ];

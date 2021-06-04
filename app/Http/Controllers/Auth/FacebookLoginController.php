@@ -42,9 +42,9 @@ class FacebookLoginController extends Controller{
 //        }catch (Exception $e){
 //            dd($e->getMessage());
 //        }
-        $user =  Socialite::driver('google')->stateless()->user();
-
-        return view('user',['user'=>$user->getId()]);
+        $user =  Socialite::driver('facebook')->stateless()->user();
+        dd($user);
+//        return view('user',['user'=>$user->email]);
 
     }
 

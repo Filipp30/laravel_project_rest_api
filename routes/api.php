@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\Auth\FacebookLoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\GoogleLoginController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Contact\ContactChatController;
 use App\Http\Controllers\Contact\ContactEmailController;
@@ -23,6 +24,8 @@ Route::post('/password/reset',[ForgotPasswordController::class,'reset']);
 Route::get('/auth/redirect/fb',[FacebookLoginController::class, 'auth_redirect_fb']);
 Route::get('/auth/callback',[FacebookLoginController::class,'fb_login_call_back']);
 
+Route::get('auth/redirect/google',[GoogleLoginController::class,'auth_redirect_google']);
+Route::get('/auth/google/callback',[GoogleLoginController::class,'google_login_call_back']);
 
 
 
