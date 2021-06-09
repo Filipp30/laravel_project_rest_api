@@ -40,5 +40,10 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => 'https://stuworld.space/api/auth/google/callback'
     ],
+    'mollie' => [
+        'client_id' => env('MOLLIE_KEY'),
+        'redirect_callback' => 'https://stuworld.space/api/redirect/callback/mollie',
+        'webhook_callback' => 'https://stuworld.space/api/webhook/callback/mollie'
+    ],
 
 ];

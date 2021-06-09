@@ -7,7 +7,7 @@
 
 </head>
 <body>
-<h1>Redirecting from Facebook</h1>
+<h1>Redirecting from Facebook or Google</h1>
 <div>
     <h1>{{$user}}</h1>
 </div>
