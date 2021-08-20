@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Contact\ContactChatController;
 use App\Http\Controllers\Contact\ContactEmailController;
 use App\Http\Controllers\Contact\PusherAuthController;
+use App\Http\Controllers\GatesController\GateController;
 use App\Http\Controllers\Payment\MollieController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,8 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('/chat/get_chat_session_messages',[ContactChatController::class,'get_chat_session_messages']);
     Route::post('/chat/remove_chat_session',[ContactChatController::class,'remove_chat_session']);
     Route::post('/chat/add_message',[ContactChatController::class,'addMessage']);
+
+    Route::get('/getData',[GateController::class,'getData']);
 });
 
 
